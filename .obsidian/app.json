@@ -1,0 +1,13 @@
+{
+  "defaultViewMode": "preview",
+  "showLineNumber": true,
+  "showUnsupportedFiles": true,
+  "alwaysUpdateLinks": true,
+  "pdfExportSettings": {
+    "pageSize": "A4",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+  },
+  "promptDelete": false
+}

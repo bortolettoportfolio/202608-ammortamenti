@@ -1,0 +1,215 @@
+{
+  "main": {
+    "id": "f634a4340cfdbe78",
+    "type": "split",
+    "children": [
+      {
+        "id": "e65bd8ee116b87a7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "baee07f1b8d1c557",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "piani_ammortamento_classici.pdf"
+              },
+              "icon": "lucide-file-text",
+              "title": "piani_ammortamento_classici"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "2351986b20317adb",
+    "type": "split",
+    "children": [
+      {
+        "id": "32d7fbe3a8e1384f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "83879beaeed9f43e",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Esplora file"
+            }
+          },
+          {
+            "id": "1a786804e3dc6ca2",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Ricerca"
+            }
+          },
+          {
+            "id": "ef5a0af974b7ed13",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "Segnalibri"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 306.8333435058594
+  },
+  "right": {
+    "id": "0c422621663954ee",
+    "type": "split",
+    "children": [
+      {
+        "id": "f2604af95a1f28e9",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "593ac6fb70148865",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Benvenuto.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Riferimenti"
+            }
+          },
+          {
+            "id": "81e668512c4bb8e5",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Benvenuto.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Collegamenti in uscita"
+            }
+          },
+          {
+            "id": "9490932630ffe202",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Etichette"
+            }
+          },
+          {
+            "id": "386c523315b92660",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Tutte le proprietà"
+            }
+          },
+          {
+            "id": "ec2257648b0bdb68",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Benvenuto.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Struttura"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Apri selettore rapido": false,
+      "graph:Apri vista grafo": false,
+      "canvas:Crea nuova lavagna": false,
+      "daily-notes:Apri nota giornaliera": false,
+      "templates:Inserisci modello": false,
+      "command-palette:Apri riquadro comandi": false,
+      "bases:Crea nuova Base": false
+    }
+  },
+  "active": "baee07f1b8d1c557",
+  "lastOpenFiles": [
+    "md/rendite finanziarie - definizioni e calcolo.md",
+    "piani_ammortamento_classici.pdf",
+    "md/modelli di ammortamento classici.md",
+    "md/piani di ammortamento prestiti.md",
+    "png/ammortamento_italiano.png",
+    "png/ammortamento_bullet.png",
+    "png/ammortamento_francese.png",
+    "png/ammortamento_bullet.png",
+    "png/ammortamento_italiano.png",
+    "png/ammortamento_francese.png",
+    "algoritmo_ammortamento_italiano.md",
+    "md/algoritmi_ammortament0_francese.md",
+    "png/pieplot_struttura_rata.png",
+    "py/pieplot_struttura_rata.png",
+    "pdf",
+    "png",
+    "py/pyplot_struttura_rata_ammortamenti.py",
+    "py/ammortamento_bullet.py",
+    "py/ammortamento_italiano.py",
+    "py/ammortamento_francese.py",
+    "py",
+    "md",
+    "Benvenuto.md"
+  ]
+}
