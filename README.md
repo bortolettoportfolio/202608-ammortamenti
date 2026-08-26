@@ -1,34 +1,65 @@
-Simulazione Piani di Ammortamento Classici
-Questa repository ospita un set di algoritmi in Python dedicati alla simulazione, all'analisi comparativa e alla visualizzazione grafica dei principali modelli di ammortamento per prestiti. Le logiche implementate riflettono fedelmente le specifiche matematiche e finanziarie documentate nel file di riferimento "piani_ammortamento_classici.pdf".
-📌 Descrizione del Progetto
-Costruire il piano di ammortamento di un prestito significa redigere il prospetto temporale attraverso il quale il debitore rimborsa il capitale e liquida gli interessi al creditore. 
-La suite di script automatizza la creazione di questi prospetti, calcolando per ogni periodo il sistema ricorsivo fondamentale:
-• Rata (R_s): La somma matematica della quota capitale e della quota interessi al periodo s (R_s = C_s + I_s).
-• Quota Interessi (I_s): La frazione di remunerazione, calcolata applicando il tasso contrattuale i al debito residuo del periodo precedente (I_s = i \cdot D_{s-1}).
-• Debito Residuo (D_s): La porzione di debito ancora da rimborsare, decrescente in funzione della quota capitale versata (D_s = D_{s-1} - C_s).
-⚙️ Modelli Implementati
-La repository fornisce moduli indipendenti per i seguenti regimi di ammortamento:
-• Ammortamento Francese (ammortamento_francese.py)
- • Caratteristiche: Prevede il pagamento di una rata periodica invariata per tutta la durata del contratto (R_s = R).
- • Dinamica: La quota interessi decresce nel tempo, mentre la quota di capitale cresce in progressione geometrica.
-• Ammortamento Italiano (ammortamento_italiano.py)
- • Caratteristiche: Il debito viene abbattuto in modo lineare tramite una quota capitale costante (C_s = C = \frac{D_0}{n}).
- • Dinamica: Genera una rata di periodo decrescente nel tempo.
-• Ammortamento Bullet (ammortamento_bullet.py)
- • Caratteristiche: Il debitore corrisponde esclusivamente le quote interessi per tutta la durata del prestito.
- • Dinamica: Il rimborso integrale del capitale avviene in un'unica soluzione alla scadenza finale (C_n = D_0).
-• Simulatore Comparativo Globale
- • Uno script aggregato che elabora simultaneamente i tre modelli, offrendo un'analisi visiva della distribuzione percentuale tra quota capitale e quota interessi.
-🛠 Funzionalità Tecniche
-Per ogni modello eseguito, gli script Python integrano le seguenti pipeline di output:
-1. Generazione del DataFrame: Costruzione matriciale del piano contenente Periodo, Rata, Quota Interessi, Quota Capitale e Debito Residuo.
-2. Esportazione Dati: Salvataggio opzionale del prospetto generato in formato CSV (strutturato con separatore ; e decimale , per la compatibilità europea).
-3. Data Visualization: Creazione ed esportazione di grafici a barre impilate (tramite matplotlib) per visualizzare l'evoluzione temporale delle quote e l'impatto degli interessi sul debito.
-🚀 Utilizzo
-Assicurati di disporre di un ambiente Python configurato con le librerie pandas e matplotlib.
-Avvia lo script desiderato tramite terminale. Ad esempio, per simulare un piano a rate costanti:
+ # Simulazione Piani di Ammortamento Classici
+Questa repository ospita un set di algoritmi in Python dedicati alla simulazione, all'analisi comparativa e alla visualizzazione grafica dei principali modelli di ammortamento per prestiti.
+
+Le logiche implementate riflettono fedelmente le specifiche matematiche e finanziarie documentate nel file di riferimento piani_ammortamento_classici.pdf.
+
+#### 🧭 Cosa cerchi?
+- Per farti una idea ➡️ $\quad$ `piani_ammortamento_classici.pdf`
+
+- Codice Python ➡️ $\quad$ `\py`
+
+- Immagini generate dalla simulazione esempio ➡️ $\quad$ `\png`
+
+- Nucleo trasferibile in Obsidian ➡️ $\quad$ `\md`, `.\obsidian`
+
+> consiglio la lettura del paragrafo "🚀 Requisiti e Utilizzo"
+
+## 📌 Astrazione del Dominio
+Costruire il piano di ammortamento di un prestito significa redigere il prospetto temporale attraverso il quale il debitore rimborsa il capitale e liquida gli interessi al creditore.
+
+Gli script automatizzano la creazione di questi prospetti, calcolando per ogni periodo $s$ il sistema ricorsiva fondamentale:
+- **Rata $R_{s}$**: somma matematica della quota capitale e della quota interessi al periodo corrente ($R_{s} = C_{s} + I_{s}$).
+- **Quota interessi $I_{s}$**: frazione di remunerazione, calcolata applicando il tassi contrattuale $i_{s-1}$ al debito residuo del periodo precedente ($I_{s}=i*D_{s-1}$).
+- **Debito residuo $D_{s}$**: porzione di debito ancora da rimborsare, decrescente in funzione della quota capitale versata ($D_{s}=D_{s-1}-C_{s}$).
+
+## ⚙️ Modelli Implementati
+La repository fornisce moduli indipendenti, strutturati per replicare specifiche logiche di rimborso:
+| Modello di ammortamento | Script di riferimento | Caratteristica principale | Dinamica del piano |
+|---|---|---|---|
+| Francese | `ammortamento_francese.py` | Rata periodica invariata ($R_{s} = R$) | Quota interessi decrescente; quota capitale in progressione geometrica |
+| Italiano | `ammortamento_italiano.py` | Quota capitale costante ($C_{s} = C = D_{0}/n$) | Abbattimento lineare del debito; rata periodica decrescente nel tempo |
+| Bullet | `ammortamento_bullet.py` | Esclusivo pagamento di quote interessi | Rimborso integrale del capitale in un'unica soluzione alla scadenza finale ($C_{n} = D_{0}$) |
+| Comparativo globale | `pyplot_struttura_rata_ammortamenti.py` | Elaborazione simultanea dei tre regimi | Analisi visiva della distribuzione percentuale temporale tra quota capitale e quota interessi |
+
+## 🛠 Stack Tecnologico e Pipeline di Output
+Per ogni modello eseguito, la pipeline di elaborazione esegue le seguenti operazioni:
+1. **Generazione dati** (`pandas`): costruzione matriciale di un DataFramce strutturato contenente le serie storiche: *Periodo*, *Rata*, *Quota interessi*, Quota capitale* e *Debito residuo*.
+2. **Esportazione I/O**: salvataggio opzionale del prospetto generato su file rigifo in formato CSV (configurato con separatore `;` e decimale `,`).
+3. **Data visualization** (`marplot`): creazione ed esportazione di grafici a barre impilate per un'ispezione visiva dell'evoluzione temporale delle quote e del decadimento del debito.
+
+## 🚀 Requisiti e Utilizzo
+Il codice è progettato per essere eseguito in un ambiente Python locale standard.
+
+#### Prerequisiti
+Assicurarsi di disporre delle librerie di data manipulation e plotting. Da terminale:
+``` bash
+pip install pandas maplotlib
+```
+#### Esecuzione
+Lanciare lo script target direttamente da terminale o tramite un IDE dedicato (es. VS Code). Esempio di esecuzione per il modello a rata costante:
+``` bash
 python ammortamento_francese.py
-Il sistema richiederà in input i seguenti parametri strettamente positivi per l'elaborazione:
-1. Capitale da finanziare (es. 12000 )
-2. Tasso di interesse (preferibile un TAN adeguato) in formato decimale (es. 0.05 per indicare il 5%)
-3. Numero totale di rate (es. 36)
+```
+A runtime, l'algoritmo richiederà l'immissione da standard input dei seguenti parametri di calcolo (esclusivamente valori strettamente positivi):
+
+1. Capitale da finanziare (€)
+2. Tasso di interesse espresso in formato decimale
+3. Numero totale di rate (intero)
+
+---
+
+**Dati usati per i grafici nella repository** 
+- *finanziamento da 12K€*
+- *tasso di interesse mensile fisso al 2,2%*
+- *36 rate (3 anni di ammortamento)*
+
