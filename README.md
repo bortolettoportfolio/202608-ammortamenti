@@ -1,16 +1,16 @@
  # Simulazione Piani di Ammortamento Classici
 Questa repository ospita un set di algoritmi in Python dedicati alla simulazione, all'analisi comparativa e alla visualizzazione grafica dei principali modelli di ammortamento per prestiti.
 
-Le logiche implementate riflettono fedelmente le specifiche matematiche e finanziarie documentate nel file di riferimento piani_ammortamento_classici.pdf.
+Le logiche implementate riflettono fedelmente le specifiche matematiche e finanziarie documentate nel file di riferimento `piani_ammortamento_classici.pdf`.
 
 #### 🧭 Cosa cerchi?
-- Per farti una idea ➡️ $\quad$ `piani_ammortamento_classici.pdf`
+-  [Per farti una idea](piani_ammortamento_classici.pdf)
 
-- Codice Python ➡️ $\quad$ `\py`
+- [Codice Python](py)
 
-- Immagini generate dalla simulazione esempio ➡️ $\quad$ `\png`
+- [Immagini generate nelle simulazioni di esempio](png)
 
-- Nucleo trasferibile in Obsidian ➡️ $\quad$ `\md`, `.\obsidian`
+- Nucleo trasferibile in obsidian: [file Markdown](md), [configuazione personale del vault](.\obsidian)
 
 > consiglio la lettura del paragrafo "🚀 Requisiti e Utilizzo"
 
@@ -33,9 +33,9 @@ La repository fornisce moduli indipendenti, strutturati per replicare specifiche
 
 ## 🛠 Stack Tecnologico e Pipeline di Output
 Per ogni modello eseguito, la pipeline di elaborazione esegue le seguenti operazioni:
-1. **Generazione dati** (`pandas`): costruzione matriciale di un DataFramce strutturato contenente le serie storiche: *Periodo*, *Rata*, *Quota interessi*, Quota capitale* e *Debito residuo*.
+1. **Generazione dati** (`pandas`): costruzione matriciale di un DataFrame strutturato contenente le serie: *Periodo*, *Rata*, *Quota interessi*, *Quota capitale* e *Debito residuo*.
 2. **Esportazione I/O**: salvataggio opzionale del prospetto generato su file rigifo in formato CSV (configurato con separatore `;` e decimale `,`).
-3. **Data visualization** (`marplot`): creazione ed esportazione di grafici a barre impilate per un'ispezione visiva dell'evoluzione temporale delle quote e del decadimento del debito.
+3. **Data visualization** (`matplot`): creazione ed esportazione di grafici a barre impilate per un'ispezione visiva dell'evoluzione temporale delle quote e del decadimento del debito.
 
 ## 🚀 Requisiti e Utilizzo
 Il codice è progettato per essere eseguito in un ambiente Python locale standard.
