@@ -63,3 +63,12 @@ A runtime, l'algoritmo richiederà l'immissione da standard input dei seguenti p
 - *tasso di interesse mensile fisso al 2,2%*
 - *36 rate (3 anni di ammortamento)*
 
+---
+## Link esterni
+- [Pandas user guide](https://pandas.pydata.org/docs/user_guide/index.html)
+- [Matplotlib user guide](https://matplotlib.org/stable/users/index)
+
+- [Matematica finanziaria - wikipedia](https://it.wikipedia.org/wiki/Matematica_finanziaria)
+- [Piano di ammortamento - wikipedia](https://it.wikipedia.org/wiki/Piano_di_ammortamento)
+- [Ammortamento a rate costanti - wikipedia](https://it.wikipedia.org/wiki/Ammortamento_a_rate_costanti)
+- [Ammortamento all'italiana - wikipedia](https://it.wikipedia.org/wiki/Ammortamento_all%27italiana)
