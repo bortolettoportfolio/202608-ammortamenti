@@ -10,7 +10,7 @@ Le logiche implementate riflettono fedelmente le specifiche matematiche e finanz
 
 - [Immagini generate nelle simulazioni di esempio](png)
 
-- Nucleo trasferibile in obsidian: [file Markdown](md), [configuazione personale del vault](.\obsidian)
+- Nucleo trasferibile in obsidian: [file Markdown](md), [configuazione personale del vault](.obsidian)
 
 > consiglio la lettura del paragrafo "🚀 Requisiti e Utilizzo"
 
