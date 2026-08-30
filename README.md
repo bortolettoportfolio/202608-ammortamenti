@@ -41,12 +41,14 @@ Per ogni modello eseguito, la pipeline di elaborazione esegue le seguenti operaz
 Il codice è progettato per essere eseguito in un ambiente Python locale standard.
 
 #### Prerequisiti
-Assicurarsi di disporre delle librerie di data manipulation e plotting. Da terminale:
+Assicurarsi di disporre delle librerie di data manipulation e plotting. 
+Da terminale:
 ``` bash
 pip install pandas maplotlib
 ```
 #### Esecuzione
-Lanciare lo script target direttamente da terminale o tramite un IDE dedicato (es. VS Code). Esempio di esecuzione per il modello a rata costante:
+Lanciare lo script target direttamente da terminale o tramite un IDE dedicato (es. VS Code). 
+Esempio di esecuzione per il modello a rata costante:
 ``` bash
 python ammortamento_francese.py
 ```
