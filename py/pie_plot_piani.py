@@ -1,10 +1,10 @@
 import os
-import pandas as pd
-import matplotlib.pyplot as plt
 
-from ammortamento_francese import ammortamento_francese
-from ammortamento_italiano import ammortamento_italiano
-from ammortamento_bullet import ammortamento_bullet
+import matplotlib.pyplot as plt
+from bullet import ammortamento_bullet
+from francese import ammortamento_francese
+from italiano import ammortamento_italiano
+
 
 def acquisisci_input_numerico(prompt: str, tipo_dato: type):
     while True:
@@ -19,7 +19,7 @@ def acquisisci_input_numerico(prompt: str, tipo_dato: type):
         except ValueError:
             print(f"Errore: Formato non valido. È richiesto un dato di tipo {tipo_dato.__name__}.\n")
 
-def confronta_torte_ammortamento_completo(df_francese, df_italiano, df_bullet):
+def pie_plot_confronto(df_francese, df_italiano, df_bullet, cap: float, tasso: float, rate: int):
     fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(14, 7.5))
 
     cap_fr = df_francese["Quota Capitale (€)"].sum()
@@ -55,14 +55,14 @@ def confronta_torte_ammortamento_completo(df_francese, df_italiano, df_bullet):
     str_tot_bu = f"Totale Pagato: € {tot_bu:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
     etichette_legenda = ["Quota Capitale", "Quota Interessi"]
-    colori = ['#FD9F89', '#648C87']
+    colori = ['#B32017', '#004B87']
 
     pie_kwargs = {
         'startangle': 90,
         'colors': colori,
         'labeldistance': 1.24,
         'wedgeprops': {'edgecolor': 'white', 'linewidth': 1.5},
-        'textprops': {'fontsize': 13, 'fontweight': 'bold', 'color': '#666666'}
+        'textprops': {'fontsize': 13, 'fontweight': 'bold', 'color': '#111111'}
     }
 
     wedges, texts = ax1.pie(valori_fr, labels=labels_fr, **pie_kwargs)
@@ -78,11 +78,15 @@ def confronta_torte_ammortamento_completo(df_francese, df_italiano, df_bullet):
     ax3.set_xlabel(str_tot_bu, fontsize=13, bbox=dict(facecolor='#f9f9f9', edgecolor="#cccccc", boxstyle='round,pad=0.6'))
 
     fig.suptitle("Impatto percentuale degli interessi", fontsize=25, fontweight='bold')
+    fig.set_facecolor('none')
+    ax1.set_facecolor('none')
+    ax2.set_facecolor('none')
+    ax3.set_facecolor('none')
 
     fig.legend(wedges, etichette_legenda, loc='lower center', bbox_to_anchor=(0.5, 0.12), ncol=2, fontsize=15, frameon=False)
 
     testo_specifiche = (f"Dati della simulazione ⟶ Finanziamento: {round(cap,2)} €;  Interesse su periodo: {round(tasso*100,2)} %;  Numero periodi: {rate}\n\nTasso fisso | Nessun preammortamento | Assenza del Day Count e festività")
-    fig.text(0.5, 0.04, testo_specifiche, ha='center', va='bottom', fontsize=12, color='#666666', style='italic')
+    fig.text(0.5, 0.04, testo_specifiche, ha='center', va='bottom', fontsize=12, color='#111111', style='italic')
 
     plt.subplots_adjust(top=0.82, bottom=0.25, wspace=0.3)
 
@@ -100,7 +104,7 @@ def confronta_torte_ammortamento_completo(df_francese, df_italiano, df_bullet):
             if cartella_destinazione and not os.path.exists(cartella_destinazione):
                 os.makedirs(cartella_destinazione)
 
-            plt.savefig(nome_file, dpi=300, bbox_inches='tight', pad_inches=0.4)
+            plt.savefig(nome_file, transparent=True, dpi=300, bbox_inches='tight', pad_inches=0.4)
             print(f"[SUCCESSO] Grafico esportato correttamente in '{nome_file}'.")
         except Exception as e:
             print(f"[ERRORE] Impossibile salvare il grafico: {e}")
@@ -108,10 +112,11 @@ def confronta_torte_ammortamento_completo(df_francese, df_italiano, df_bullet):
     print("\nChiusura della finestra del grafico in corso... (Chiudi la finestra per terminare il programma)")
     plt.show()
 
+
 if __name__ == "__main__":
-    print("=========================================")
+    print("====================================================")
     print("   CONFRONTO STRUTTURA PIANI AMMORTAMENTO CLASSICI  ")
-    print("=========================================\n")
+    print("====================================================\n")
     
     cap = acquisisci_input_numerico("Inserisci il capitale da finanziare (in €): ", float)
     tasso = acquisisci_input_numerico("Inserisci il tasso di interesse decimale (es. 0.05 per 5%): ", float)
@@ -123,4 +128,4 @@ if __name__ == "__main__":
     df_it = ammortamento_italiano(cap, tasso, rate)
     df_bu = ammortamento_bullet(cap, tasso, rate)
 
-    confronta_torte_ammortamento_completo(df_fr, df_it, df_bu)
+    pie_plot_confronto(df_fr, df_it, df_bu, cap, tasso, rate)
