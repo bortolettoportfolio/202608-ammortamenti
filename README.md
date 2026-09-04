@@ -21,13 +21,7 @@ Gli script automatizzano la creazione di questi prospetti, calcolando per ogni p
 - **Debito residuo $D_{s}$**: porzione di debito ancora da rimborsare, decrescente in funzione della quota capitale versata ($D_{s}=D_{s-1}-C_{s}$).
 
 ## ⚙️ Modelli Implementati
-La repository fornisce moduli indipendenti, strutturati per replicare specifiche logiche di rimborso:
-| Modello di ammortamento | Script di riferimento | Caratteristica principale | Dinamica del piano |
-|---|---|---|---|
-| Francese | `ammortamento_francese.py` | Rata periodica invariata ($R_{s} = R$) | Quota interessi decrescente; quota capitale in progressione geometrica |
-| Italiano | `ammortamento_italiano.py` | Quota capitale costante ($C_{s} = C = D_{0}/n$) | Abbattimento lineare del debito; rata periodica decrescente nel tempo |
-| Bullet | `ammortamento_bullet.py` | Esclusivo pagamento di quote interessi | Rimborso integrale del capitale in un'unica soluzione alla scadenza finale ($C_{n} = D_{0}$) |
-| Comparativo globale | `pyplot_struttura_rata_ammortamenti.py` | Elaborazione simultanea dei tre regimi | Analisi visiva della distribuzione percentuale temporale tra quota capitale e quota interessi |
+La repository fornisce moduli indipendenti, strutturati per replicare specifiche logiche di rimborso classiche -> paragrafo in elaborazione
 
 ## 🛠 Stack Tecnologico e Pipeline di Output
 Per ogni modello eseguito, la pipeline di elaborazione esegue le seguenti operazioni:
