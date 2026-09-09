@@ -1,5 +1,5 @@
 '''
-##### DEFINIZIONE AMMORTAMENTO BULLET ####
+DEFINIZIONE AMMORTAMENTO BULLET
 '''
 
 import pandas as pd

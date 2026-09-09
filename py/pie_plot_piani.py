@@ -55,7 +55,7 @@ def pie_plot_confronto(df_francese, df_italiano, df_bullet, cap: float, tasso: f
     str_tot_bu = f"Totale Pagato: € {tot_bu:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
     etichette_legenda = ["Quota Capitale", "Quota Interessi"]
-    colori = ['#B32017', '#004B87']
+    colori = ['#004B87', '#B32017']
 
     pie_kwargs = {
         'startangle': 90,
@@ -68,6 +68,7 @@ def pie_plot_confronto(df_francese, df_italiano, df_bullet, cap: float, tasso: f
     wedges, texts = ax1.pie(valori_fr, labels=labels_fr, **pie_kwargs)
     ax1.set_title("Piano alla Francese\n(Rata Costante)", fontsize=15, pad=30)
     ax1.set_xlabel(str_tot_fr, fontsize=13, bbox=dict(facecolor='#f9f9f9', edgecolor="#cccccc", boxstyle='round,pad=0.6'))
+
 
     ax2.pie(valori_it, labels=labels_it, **pie_kwargs)
     ax2.set_title("Piano all'Italiano\n(Quota Capitale Costante)", fontsize=15, pad=30)

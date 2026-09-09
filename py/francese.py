@@ -1,21 +1,5 @@
 '''
-##### SIMULATORE CASH FLOW AMMORTAMENTO FRANCESE ####
-
-Il piano di ammortamento francese è caratterizzato dal pagamenti di una 
-rata periodica invariata per tutta la durata del contratto.
-
-Per il principio di chiusura finanziaria, la rata costante si determina 
-rapportando il debito iniziale al fattore di valore attuale di una rendita
-unitaria: R = D/("a figurato n al tasso i")
-
-Poichè la rata è fissa e il debito residuo decresce, la quota interessi
-diminuisce nel tempo, mentre la quota capitale cresce in progressione geometrica
-di ragione (1+i)
-
-STRUTTURA DELLE SCELTE
-- Definizione del capitale
-- Definizione del tasso di interesse annuo/periodale
-- Definizione del numero di rate
+SIMULATORE CASH FLOW AMMORTAMENTO FRANCESE
 '''
 
 import pandas as pd

@@ -17,8 +17,8 @@ def bar_plot_inpila(df: pd.DataFrame, cap: float, tasso: float, rate: int):
     fig, ax = plt.subplots(figsize=(12, 7))
 
     # Bar Plot Impilato
-    bars_cap = ax.bar(df['Periodo'], df['Quota Capitale (€)'], color='#FD9F89', label="Quota Capitale", width=0.8)
-    bars_int = ax.bar(df['Periodo'], df['Quota Interessi (€)'], bottom=df['Quota Capitale (€)'], color='#648C87', label="Quota Interessi", width=0.8)
+    bars_cap = ax.bar(df['Periodo'], df['Quota Capitale (€)'], color='#004B87', label="Quota Capitale", width=0.8)
+    bars_int = ax.bar(df['Periodo'], df['Quota Interessi (€)'], bottom=df['Quota Capitale (€)'], color='#B32017', label="Quota Interessi", width=0.8)
     
     # Formattazione Assi
     ax.set_xlabel("Numero Rata", fontsize=18, labelpad=15)
@@ -26,7 +26,8 @@ def bar_plot_inpila(df: pd.DataFrame, cap: float, tasso: float, rate: int):
     
     ax.set_xticks(df['Periodo'])
     ax.tick_params(axis='both', pad=10)
-    
+    ax.set_xticklabels([])
+
     ax.grid(axis='y', linestyle=':', color='gray', alpha=0.4)
 
     # Formattazione legenda
