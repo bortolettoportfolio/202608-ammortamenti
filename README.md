@@ -73,12 +73,13 @@ python pie_plot_piani.py
 ```
 
 A runtime, l'algoritmo richiederà l'immissione da standard input dei seguenti parametri di calcolo (esclusivamente valori strettamente positivi)
+
 ---
 
 **Dati usati per i grafici nella repository** 
-- *finanziamento da 12K€*
-- *tasso di interesse mensile fisso al 2,2%*
-- *36 rate (3 anni di ammortamento)*
+- *finanziamento da 30K€*
+- *TAN pari a 3,25 %*
+- *60 rate (5 anni di ammortamento)*
 
 ---
 ## guide utili
