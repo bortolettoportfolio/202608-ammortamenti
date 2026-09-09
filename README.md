@@ -6,9 +6,11 @@ Questa repository ospita un set di algoritmi in Python dedicati alla simulazione
 ## 🧭 Cosa cerchi?
 |link interno |avanzamento|
 |:---|:---:|
-|[programma completo](py/main.py)| 🟡|
-|[immagini delle simulazioni](png)| 🟡|
-|[teoria senza troppi giri di parole](piani_ammortamento_classici.pdf)| 🟡| 
+|[programma completo](py/main.py)|🟡|
+|[immagini delle simulazioni](png)|🟡|
+|[teoria senza troppi giri di parole](piani_ammortamento_classici.pdf)|🟡| 
+
+Attenzione che i grafici hanno lo sfondo trasparente :)
 
 > Consiglio la lettura del paragrafo "🤞 Requisiti e Utilizzo"
 
