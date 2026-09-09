@@ -1,20 +1,18 @@
- # Simulazione Piani di Ammortamento Classici
+ # Simulazione dei flussi di cassa nei finanziamenti classici
 Questa repository ospita un set di algoritmi in Python dedicati alla simulazione, all'analisi comparativa e alla visualizzazione grafica dei principali modelli di ammortamento per prestiti.
 
-Le logiche implementate riflettono fedelmente le specifiche matematiche finanziarie classiche.
-
+> Le logiche implementate riflettono fedelmente le specifiche matematiche finanziarie classiche.
 
 ## 🧭 Cosa cerchi?
-||stato e link|
-|---|---|
-|programma completo| [🔴](py\main.py)|
-|immagini delle simulazioni| [🟡](png)|
-|teoria senza troppi giri di parole| [🟡](piani_ammortamenyo_classici.pdf)| 
+|link interno |avanzamento|
+|:---|:---:|
+|[programma completo](py\main.py)| 🟡|
+|[immagini delle simulazioni](png)| 🟡|
+|[teoria senza troppi giri di parole](piani_ammortamenyo_classici.pdf)| 🟡| 
 
+> Consiglio la lettura del paragrafo "🤞 Requisiti e Utilizzo"
 
-> consiglio la lettura del paragrafo "🚀 Requisiti e Utilizzo"
-
-## Piani ammortamento analizzati
+## 🫠 In sintesi
 Costruire il piano di ammortamento di un prestito significa redigere il prospetto temporale attraverso il quale il debitore rimborsa il capitale e liquida gli interessi al creditore.
 
 Gli script automatizzano la creazione di questi prospetti, calcolando per ogni periodo $s$ il sistema ricorsivo fondamentale:
@@ -27,13 +25,16 @@ Gli script automatizzano la creazione di questi prospetti, calcolando per ogni p
 L'[ammortamento alla francese](py\francese.py) è una modalità di calcolo impiegata in modo ampio da banche e finanziarie quando si deve stabilire l'ammontare di un finanziamento.
 Prevede un rimborso con **rate costanti per tutta la durata del piano di ammortamento**.
 
+---
 ### Quota capitale costante
 L’[ammortamento all’italiana](py/italiano.py) è un metodo di rimborso del debito che prevede **rate di importo decrescente nel tempo**.
 Ogni rata è composta da una quota di capitale costante e da una quota di interessi che diminuisce progressivamente, poiché viene calcolata sul debito residuo.
 
+---
 ### Quota interessi costante 
 L'[ammortamento bullet](py/bullet.py) è un piano di rimborso di un prestito in cui il capitale viene restituito interamente in un'unica soluzione alla scadenza, mentre durante la vita del finanziamento si pagano periodicamente solo gli interessi
 
+---
 ### fico, ma non ci sono ancora :(
 * **ammortamento tedesco**: viene utilizzata la stessa logica del piano alla francese, con rata fissa, quota interessi “fissa” decrescente e quota capitale che si adatta in modo tale da mantenere la rata costante. Tuttavia nell’ammortamento tedesco *il calcolo degli interessi avviene in modo anticipato*, per cui ci si riferisce a valori attualizzati, che sono leggermente più bassi rispetto il calcolo con l’ammortamento francese.
 
@@ -45,22 +46,22 @@ Per ogni modello eseguito, la pipeline di elaborazione esegue le seguenti operaz
 1. **Generazione dati** (`pandas`): costruzione di un DataFrame strutturato contenente le serie:
 
     |*Periodo*|*Rata*|*Quota interessi*|*Quota capitale*|*Debito residuo*|
-    |---|---|---|---|---|
+    |:---:|:---:|:---:|:---:|:---:|
     | $s$ | $R_{s}$ | $I_{s}$ | $C_{s}$ | $D_{s}$ |
 
 2. **Esportazione I/O**: salvataggio **opzionale** del prospetto generato su file rigido in formato CSV (configurato con separatore `;` e decimale `,`).
 3. **Data visualization** (`matplot`): creazione ed esportazione dei grafici 
 
-## 🚀 Requisiti e Utilizzo
+## 🤞 Requisiti e Utilizzo
 Il codice è progettato per essere eseguito in un ambiente Python locale standard.
 
-#### Prerequisiti
+#### 🖥️ Prerequisiti
 Assicurarsi di disporre delle librerie di data manipulation e plotting. 
 Da terminale:
 ``` bash
 pip install pandas maplotlib
 ```
-#### Esecuzione
+#### ▶️ Esecuzione
 Lanciare lo script target direttamente da terminale o tramite un IDE dedicato (es. VS Code). 
 Esempio di esecuzione per il modello a rata costante:
 ``` bash
@@ -83,4 +84,5 @@ A runtime, l'algoritmo richiederà l'immissione da standard input dei seguenti p
 ## guide utili
 - [Pandas user guide](https://pandas.pydata.org/docs/user_guide/index.html)
 - [Matplotlib user guide](https://matplotlib.org/stable/users/index)
+
 

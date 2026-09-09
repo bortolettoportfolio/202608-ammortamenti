@@ -1,9 +1,7 @@
 import os
 
 import matplotlib.pyplot as plt
-from bullet import ammortamento_bullet
-from francese import ammortamento_francese
-from italiano import ammortamento_italiano
+import pandas as pd
 
 
 def acquisisci_input_numerico(prompt: str, tipo_dato: type):
@@ -19,7 +17,7 @@ def acquisisci_input_numerico(prompt: str, tipo_dato: type):
         except ValueError:
             print(f"Errore: Formato non valido. È richiesto un dato di tipo {tipo_dato.__name__}.\n")
 
-def pie_plot_confronto(df_francese, df_italiano, df_bullet, cap: float, tasso: float, rate: int):
+def pie_plot_confronto(df_francese: pd.DataFrame, df_italiano: pd.DataFrame, df_bullet: pd.DataFrame, cap: float, tasso: float, rate: int, frequenza: str):
     fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(14, 7.5))
 
     cap_fr = df_francese["Quota Capitale (€)"].sum()
@@ -44,7 +42,7 @@ def pie_plot_confronto(df_francese, df_italiano, df_bullet, cap: float, tasso: f
     valori_bu = [cap_bu, int_bu]
 
     def formatta_valuta(valore):
-        return f"Costo Interessi:\n{valore:,.2f} %".replace(",", "X").replace(".", ",").replace("X", ".")
+        return f"{valore:,.2f} %".replace(",", "X").replace(".", ",").replace("X", ".")
 
     labels_fr = ["", formatta_valuta(per_int_fr)]
     labels_it = ["", formatta_valuta(per_int_it)]
@@ -54,7 +52,7 @@ def pie_plot_confronto(df_francese, df_italiano, df_bullet, cap: float, tasso: f
     str_tot_it = f"Totale Pagato: € {tot_it:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
     str_tot_bu = f"Totale Pagato: € {tot_bu:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
-    etichette_legenda = ["Quota Capitale", "Quota Interessi"]
+    etichette_legenda = ["costo quota Capitale", "costo quota Interessi"]
     colori = ['#004B87', '#B32017']
 
     pie_kwargs = {
@@ -78,7 +76,7 @@ def pie_plot_confronto(df_francese, df_italiano, df_bullet, cap: float, tasso: f
     ax3.set_title("Piano Bullet\n(Rimborso Capitale a Scadenza)", fontsize=15, pad=30)
     ax3.set_xlabel(str_tot_bu, fontsize=13, bbox=dict(facecolor='#f9f9f9', edgecolor="#cccccc", boxstyle='round,pad=0.6'))
 
-    fig.suptitle("Impatto percentuale degli interessi", fontsize=25, fontweight='bold')
+    fig.suptitle("Ripartizione del finanziamento nei regimi classici", fontsize=25, fontweight='bold')
     fig.set_facecolor('none')
     ax1.set_facecolor('none')
     ax2.set_facecolor('none')
@@ -86,11 +84,15 @@ def pie_plot_confronto(df_francese, df_italiano, df_bullet, cap: float, tasso: f
 
     fig.legend(wedges, etichette_legenda, loc='lower center', bbox_to_anchor=(0.5, 0.12), ncol=2, fontsize=15, frameon=False)
 
-    testo_specifiche = (f"Dati della simulazione ⟶ Finanziamento: {round(cap,2)} €;  Interesse su periodo: {round(tasso*100,2)} %;  Numero periodi: {rate}\n\nTasso fisso | Nessun preammortamento | Assenza del Day Count e festività")
-    fig.text(0.5, 0.04, testo_specifiche, ha='center', va='bottom', fontsize=12, color='#111111', style='italic')
+
+    testo_specifiche = (f"Finanziamento: {round(cap,2)} € | Frequenza pagamenti: {frequenza} | TAN (%): {round(tasso*100,2)} % | Numero rate: {rate}\n\nTasso fisso | Nessun preammortamento | Assenza del Day Count e festività")
+    fig.text(0.5, 0.015, testo_specifiche, ha='center', va='bottom', fontsize=12, color='#111111', style='italic')
 
     plt.subplots_adjust(top=0.82, bottom=0.25, wspace=0.3)
 
+    print("\n\n################################################################")
+    print("### PLOT: Ripartizione del finanziamento nei regimi classici ###")
+    print("################################################################\n")
     salva = input("\nDesideri esportare il grafico come immagine? (s/n): ").strip().lower()
     if salva in ['s', 'si', 'y', 'yes']:
         nome_file = input("Inserisci il nome del file (es. grafico.png) o premi Invio per default: ").strip()
@@ -113,20 +115,3 @@ def pie_plot_confronto(df_francese, df_italiano, df_bullet, cap: float, tasso: f
     print("\nChiusura della finestra del grafico in corso... (Chiudi la finestra per terminare il programma)")
     plt.show()
 
-
-if __name__ == "__main__":
-    print("====================================================")
-    print("   CONFRONTO STRUTTURA PIANI AMMORTAMENTO CLASSICI  ")
-    print("====================================================\n")
-    
-    cap = acquisisci_input_numerico("Inserisci il capitale da finanziare (in €): ", float)
-    tasso = acquisisci_input_numerico("Inserisci il tasso di interesse decimale (es. 0.05 per 5%): ", float)
-    rate = acquisisci_input_numerico("Inserisci il numero totale di rate: ", int)
-    
-    print("\nElaborazione in corso...\n")
-
-    df_fr = ammortamento_francese(cap, tasso, rate)
-    df_it = ammortamento_italiano(cap, tasso, rate)
-    df_bu = ammortamento_bullet(cap, tasso, rate)
-
-    pie_plot_confronto(df_fr, df_it, df_bu, cap, tasso, rate)

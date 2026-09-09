@@ -8,24 +8,25 @@ Generazione del plot per la visualizzazione temporale della struttura della rata
 
 """
 
-def bar_plot_inpila(df: pd.DataFrame, cap: float, tasso: float, rate: int):
+def bar_plot_inpila(df: pd.DataFrame):
     """
-    Genera il grafico a barre impilate dal DataFrame e gestisce il salvataggio su file,
+    Genera il grafico a barre impilate del DataFrame e gestisce il salvataggio su file,
     applicando gli standard visivi e strutturali del framework.
     """
     # Tela
     fig, ax = plt.subplots(figsize=(12, 7))
+    fig.set_facecolor('none')
+    ax.set_facecolor('none')
 
     # Bar Plot Impilato
-    bars_cap = ax.bar(df['Periodo'], df['Quota Capitale (€)'], color='#004B87', label="Quota Capitale", width=0.8)
+    bars_cap = ax.bar(df['Periodo'], df['Quota Capitale (€)'], color='#C0C0C0', label="Quota Capitale", width=0.8)
     bars_int = ax.bar(df['Periodo'], df['Quota Interessi (€)'], bottom=df['Quota Capitale (€)'], color='#B32017', label="Quota Interessi", width=0.8)
     
     # Formattazione Assi
-    ax.set_xlabel("Numero Rata", fontsize=18, labelpad=15)
-    ax.set_ylabel("Valore della Rata [€]", fontsize=18, labelpad=15)
+    ax.set_xlabel("Periodo", fontsize=16, labelpad=10)
+    ax.set_ylabel("Valore della Rata [€]", fontsize=16, labelpad=15)
     
     ax.set_xticks(df['Periodo'])
-    ax.tick_params(axis='both', pad=10)
     ax.set_xticklabels([])
 
     ax.grid(axis='y', linestyle=':', color='gray', alpha=0.4)
@@ -41,6 +42,10 @@ def bar_plot_inpila(df: pd.DataFrame, cap: float, tasso: float, rate: int):
     plt.tight_layout(rect=[0, 0.22, 1, 0.90])
 
     # Logica di esportazione
+    print("\n\n###################################")
+    print("### PLOT: struttura della rata  ###")
+    print("###################################\n")
+
     salva = input("\nDesideri esportare il grafico come immagine? (s/n): ").strip().lower()
     if salva in ['s', 'si', 'y', 'yes']:
         nome_file = input("Inserisci il nome del file (es. grafico.png) o premi Invio per default: ").strip()

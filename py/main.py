@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 from bar_struttura_rata import bar_plot_inpila
 from bullet import ammortamento_bullet
@@ -8,13 +10,8 @@ from plot_decadimento_debito import plot_confronto_decadimento
 
 
 def acquisisci_input_numerico(prompt: str, tipo_dato: type):
-    """
-    Gestisce l'acquisizione dell'input da terminale forzando un tipo di dato
-    e richiedendo valori strettamente positivi.
-    """
     while True:
         valore_input = input(prompt)
-        # Sostituisce l'eventuale virgola usata per i decimali con il punto
         valore_input = valore_input.replace(',', '.')
         
         try:
@@ -29,39 +26,56 @@ def acquisisci_input_numerico(prompt: str, tipo_dato: type):
 if __name__ == "__main__":
 
     cap = acquisisci_input_numerico("Inserisci valore finanziamento (in €): ", float)
-    tasso = acquisisci_input_numerico("Inserisci il tasso di interesse decimale (es. 0.05 per 5%) riferito al periodo rata: ", float)
+    tasso = acquisisci_input_numerico("Inserisci TAN in formato decimale (es. 0.05 per 5%): ", float)
     rate = acquisisci_input_numerico("Inserisci il numero totale di rate: ", int)
-    tipo_piano = input("Piano (Francese, Italiano, Bullet): ").strip().capitalize()
+    
+    while True:
+        tipo_piano = input("Piano (francese, italiano, bullet): ").strip().lower()
+        if tipo_piano in ['francese', 'italiano', 'bullet']:
+            break
+        print("Errore: Piano non riconosciuto. Inserire 'francese', 'italiano' o 'bullet'.\n")
+        
+    frequenza = input("Inserisci frequenza delle rate (tra mensile, trimestrale, semestrale e annuale): ").strip().lower()
 
+    print("\n=========================================")
     print("=========================================")
     print("    CALCOLATORE DEL PRESTITO PERSONALE   ")
     print("==========================================\n")
-    # Qua verranno visualizzate le variabili della simulazione
     print("Dati inseriti dell'user:")
     print(f"Finanziamento da {round(cap,0)} €")
     print(f"Tasso di interesse annuale (TAN) da contratto: {round(tasso,2)*100} ")
     print(f"Numero di rate: {rate}")
+    print(f"Frequenza delle rate: {frequenza}\n")
     print(f"Piano da scaricare in formato csv: {tipo_piano}\n")
 
     print("----------------------------")
     print("Elaborazione in corso...")
     print("----------------------------\n")
-
-    if tipo_piano == "Francese":
-        df = ammortamento_francese(cap, tasso, rate)
-    elif tipo_piano == "Italiano":
-        df = ammortamento_italiano(cap, tasso, rate)
-    elif tipo_piano == "Bullet":
-        df = ammortamento_bullet(cap, tasso, rate)
+    
+    interesse_periodo = tasso
+    if frequenza == "mensile":
+        interesse_periodo = tasso / 12
+    elif frequenza == "trimestrale":
+        interesse_periodo = tasso / 4
+    elif frequenza == "semestrale":
+        interesse_periodo = tasso / 2
+    elif frequenza == "annuale":
+        interesse_periodo = tasso
     else:
-        print("Errore: Piano non riconosciuto. Uscita.")
-
+        print("Frequenza non valida. Impostata a 'annuale' per default.")
+        
+    piani = {
+        "francese": ammortamento_francese(cap, interesse_periodo, rate),
+        "italiano": ammortamento_italiano(cap, interesse_periodo, rate),
+        "bullet": ammortamento_bullet(cap, interesse_periodo, rate)
+    }
+    
+    df = piani[tipo_piano]
     
     interesse_totale = df['Quota Interessi (€)'].sum()
     capitale_totale = df['Quota Capitale (€)'].sum()
     pagato_totale = capitale_totale + interesse_totale
 
-    # Formattazione e output del piano ammortamento
     pd.options.display.float_format = '{:,.2f}'.format
     print("\n")
     print(df.to_string(index=False)) 
@@ -71,13 +85,28 @@ if __name__ == "__main__":
     print(f"- Quota capitale:  {capitale_totale/pagato_totale*100:.2f} %\n")
     print("=========================================\n")
 
-    # Finalmente i grafici :)
-    # per la tipologia di piano selezionata
-    bar_plot_inpila(df, cap, tasso, rate)
+    salva = input("\nDesideri scaricare il piano selezionato in formato .csv? (s/n): ").strip().lower()
+    if salva in ['s', 'si', 'y', 'yes']:
+        nome_file = input("Inserisci il nome del file (es. piano_ammortamento.csv) o premi Invio per default: ").strip()
+        
+        if not nome_file:
+            nome_file = "piano_ammortamento.csv"
+        elif not (nome_file.endswith(".csv")):
+            nome_file += ".csv"
+            
+        try:
+            cartella_destinazione = os.path.dirname(nome_file)
+            if cartella_destinazione and not os.path.exists(cartella_destinazione):
+                os.makedirs(cartella_destinazione)
+            
+            df.to_csv(nome_file, index=False, sep=';', decimal=',')
+            
+            print(f"[SUCCESSO] Esportazione dei dati csv avvenuta '{nome_file}'.")
+        except Exception as e:
+            print(f"[ERRORE] Impossibile salvare i dati del DataFrame: {e}")
+
+    bar_plot_inpila(df)
+
+    pie_plot_confronto(piani["francese"], piani["italiano"], piani["bullet"], cap, tasso, rate, frequenza)
     
-    ## per il confronto tra i piani classici
-    fr = ammortamento_francese(cap, tasso, rate)
-    ita = ammortamento_italiano(cap, tasso, rate)
-    bul = ammortamento_bullet(cap, tasso, rate)
-    pie_plot_confronto(fr, ita, bul, cap, tasso, rate)
-    plot_confronto_decadimento(df, cap, tasso, rate)
+    plot_confronto_decadimento(piani["francese"], piani["italiano"], piani["bullet"])
