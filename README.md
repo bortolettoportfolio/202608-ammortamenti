@@ -6,7 +6,7 @@ Questa repository ospita un set di algoritmi in Python dedicati alla simulazione
 ## 🧭 Cosa cerchi?
 |link interno |avanzamento|
 |:---|:---:|
-|[programma completo](py\main.py)| 🟡|
+|[programma completo](py/main.py)| 🟡|
 |[immagini delle simulazioni](png)| 🟡|
 |[teoria senza troppi giri di parole](piani_ammortamenyo_classici.pdf)| 🟡| 
 
@@ -22,7 +22,7 @@ Gli script automatizzano la creazione di questi prospetti, calcolando per ogni p
 
 
 ### Rata costante
-L'[ammortamento alla francese](py\francese.py) è una modalità di calcolo impiegata in modo ampio da banche e finanziarie quando si deve stabilire l'ammontare di un finanziamento.
+L'[ammortamento alla francese](py/francese.py) è una modalità di calcolo impiegata in modo ampio da banche e finanziarie quando si deve stabilire l'ammontare di un finanziamento.
 Prevede un rimborso con **rate costanti per tutta la durata del piano di ammortamento**.
 
 ---
