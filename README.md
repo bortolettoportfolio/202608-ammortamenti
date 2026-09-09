@@ -8,7 +8,7 @@ Questa repository ospita un set di algoritmi in Python dedicati alla simulazione
 |:---|:---:|
 |[programma completo](py/main.py)| 🟡|
 |[immagini delle simulazioni](png)| 🟡|
-|[teoria senza troppi giri di parole](piani_ammortamenyo_classici.pdf)| 🟡| 
+|[teoria senza troppi giri di parole](piani_ammortamento_classici.pdf)| 🟡| 
 
 > Consiglio la lettura del paragrafo "🤞 Requisiti e Utilizzo"
 
