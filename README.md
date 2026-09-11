@@ -1,17 +1,20 @@
+ ### ⚠️ in elaborazione 
  # Simulazione dei flussi di cassa nei finanziamenti classici
 Questa repository ospita un set di algoritmi in Python dedicati alla simulazione, all'analisi comparativa e alla visualizzazione grafica dei principali modelli di ammortamento per prestiti.
 
 > Le logiche implementate riflettono fedelmente le specifiche matematiche finanziarie classiche.
 
 ## 🧭 Cosa cerchi?
-|link interno |avanzamento|
+|collegamento|stato avanzamento|
 |:---|:---:|
-|[programma completo](py/main.py)|🟡|
-|[immagini delle simulazioni](png)|🟡|
+|[main.py](py/main.py)|🟡|
+|[grafici generati di esempio](png)|🟡|
 |[teoria senza troppi giri di parole](piani_ammortamento_classici.pdf)|🟡| 
 
-Attenzione che i grafici hanno lo sfondo trasparente :)
+> [!WARNING]
+> Grafici sono ottimizzati per visualizzazione su sfondo chiaro :)
 
+> [!NOTE]
 > Consiglio la lettura del paragrafo "🤞 Requisiti e Utilizzo"
 
 ## 🫠 In sintesi
@@ -56,25 +59,21 @@ Per ogni modello eseguito, la pipeline di elaborazione esegue le seguenti operaz
 
 ## 🤞 Requisiti e Utilizzo
 Il codice è progettato per essere eseguito in un ambiente Python locale standard.
+> pensato per visualizzazione da terminale
 
 #### 🖥️ Prerequisiti
-Assicurarsi di disporre delle librerie di data manipulation e plotting. 
-Da terminale:
+Assicurarsi di disporre di un ambiente Python e delle librerie di data manipulation e plotting. 
+Per le librerie, da terminale:
 ``` bash
 pip install pandas maplotlib
 ```
 #### ▶️ Esecuzione
-Lanciare lo script target direttamente da terminale o tramite un IDE dedicato (es. VS Code). 
-Esempio di esecuzione per il modello a rata costante:
+Lanciare lo script direttamente da terminale o tramite un IDE dedicato (es. VS Code). 
+Ad esempio, per l'intero programma:
 ``` bash
-python francese.py
+python main.py
 ```
-Esempio di esecuzione per visualizzare esclusivamente uno dei plot in particolare:
-``` bash
-python pie_plot_piani.py
-```
-
-A runtime, l'algoritmo richiederà l'immissione da standard input dei seguenti parametri di calcolo (esclusivamente valori strettamente positivi)
+A runtime, l'algoritmo richiederà l'immissione da standard input dei parametri di calcolo 
 
 ---
 
