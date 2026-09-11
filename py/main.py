@@ -1,19 +1,17 @@
 ## =============================================== ##
-## =============================================== ##
 ##                   IMPORT                        ##
 ## =============================================== ##
-## =============================================== ##
-
 import os
+import subprocess
 
 import matplotlib.pyplot as plt
 import pandas as pd
 
-## =============================================== ##
-## =============================================== ##
+## +++++++++++++++++++++++++++++++++++++++++++++++ ##
+## +++++++++++++++++++++++++++++++++++++++++++++++ ##
 ## DEFINIZIONI CLASSICHE DEI PIANI DI AMMORTAMENTO ##
-## =============================================== ##
-## =============================================== ##
+## +++++++++++++++++++++++++++++++++++++++++++++++ ##
+## +++++++++++++++++++++++++++++++++++++++++++++++ ##
 
 def ammortamento_francese(capitale: float, i: float, n: int) -> pd.DataFrame:
     """
@@ -138,13 +136,17 @@ def ammortamento_bullet(capitale: float, i_annuo: float, n: int) -> pd.DataFrame
         'Debito Residuo (€)': array_debito_residuo
     })
 
-## =============================================== ##
-## =============================================== ##
+## +++++++++++++++++++++++++++++++++++++++++++++++ ##
+## +++++++++++++++++++++++++++++++++++++++++++++++ ##
 ##                      PLOT                       ##
-## =============================================== ##
-## =============================================== ##
+## +++++++++++++++++++++++++++++++++++++++++++++++ ##
+## +++++++++++++++++++++++++++++++++++++++++++++++ ##
 
-def pie_plot_confronto(df_francese: pd.DataFrame, df_italiano: pd.DataFrame, df_bullet: pd.DataFrame, cap: float, tasso: float, rate: int, frequenza: str, percorso_salvataggio: str = None, mostra: bool = True):
+def pie_plot_confronto(df_francese: pd.DataFrame, df_italiano: pd.DataFrame, df_bullet: pd.DataFrame,
+                       cap: float, tasso: float, rate: int, frequenza: str,
+                       percorso_salvataggio: str | None = None,
+                       show: bool = True):
+
     fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(14, 7.5))
 
     cap_fr = df_francese["Quota Capitale (€)"].sum()
@@ -180,7 +182,7 @@ def pie_plot_confronto(df_francese: pd.DataFrame, df_italiano: pd.DataFrame, df_
     str_tot_bu = f"Totale Pagato: € {tot_bu:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
     etichette_legenda = ["costo quota Capitale", "costo quota Interessi"]
-    colori = ['#004B87', '#B32017']
+    colori = ['#648fff', '#fe6100']
 
     pie_kwargs = {
         'startangle': 90,
@@ -190,18 +192,18 @@ def pie_plot_confronto(df_francese: pd.DataFrame, df_italiano: pd.DataFrame, df_
         'textprops': {'fontsize': 13, 'fontweight': 'bold', 'color': '#111111'}
     }
 
-    wedges, texts = ax1.pie(valori_fr, labels=labels_fr, **pie_kwargs)
+    wedges, _ = ax1.pie(valori_fr, labels=labels_fr, **pie_kwargs)
     ax1.set_title("Piano alla Francese\n(Rata Costante)", fontsize=15, pad=30)
-    ax1.set_xlabel(str_tot_fr, fontsize=13, bbox=dict(facecolor='#f9f9f9', edgecolor="#cccccc", boxstyle='round,pad=0.6'))
+    ax1.set_xlabel(str_tot_fr, fontsize=13, bbox={'facecolor': '#f9f9f9', 'edgecolor': '#cccccc', 'boxstyle': 'round,pad=0.6'})
 
 
     ax2.pie(valori_it, labels=labels_it, **pie_kwargs)
     ax2.set_title("Piano all'Italiano\n(Quota Capitale Costante)", fontsize=15, pad=30)
-    ax2.set_xlabel(str_tot_it, fontsize=13, bbox=dict(facecolor='#f9f9f9', edgecolor="#cccccc", boxstyle='round,pad=0.6'))
+    ax2.set_xlabel(str_tot_it, fontsize=13, bbox={'facecolor': '#f9f9f9', 'edgecolor': '#cccccc', 'boxstyle': 'round,pad=0.6'})
 
     ax3.pie(valori_bu, labels=labels_bu, **pie_kwargs)
     ax3.set_title("Piano Bullet\n(Rimborso Capitale a Scadenza)", fontsize=15, pad=30)
-    ax3.set_xlabel(str_tot_bu, fontsize=13, bbox=dict(facecolor='#f9f9f9', edgecolor="#cccccc", boxstyle='round,pad=0.6'))
+    ax3.set_xlabel(str_tot_bu, fontsize=13, bbox={'facecolor': '#f9f9f9', 'edgecolor': '#cccccc', 'boxstyle': 'round,pad=0.6'})
 
     fig.suptitle("Ripartizione del finanziamento nei regimi classici", fontsize=25, fontweight='bold')
     fig.set_facecolor('none')
@@ -224,41 +226,43 @@ def pie_plot_confronto(df_francese: pd.DataFrame, df_italiano: pd.DataFrame, df_
                 format="png"
             )
         
-    if mostra:
+    if show:
          plt.show()
             
     plt.close(fig)
 
-def plot_confronto_decadimento(df_fr: pd.DataFrame, df_it: pd.DataFrame, df_bl: pd.DataFrame, percorso_salvataggio: str = None, mostra: bool = True):
+def plot_confronto_decadimento(df_fr: pd.DataFrame, df_it: pd.DataFrame, df_bl: pd.DataFrame,
+                               percorso_salvataggio: str | None = None,
+                               show: bool = True):
     """
     Grafico che mostra il decadimento del debito residuo nei piani di ammortamento classici.
     """
-    # Creazione tela con dimensioni standardizzate
-    fig, ax = plt.subplots(figsize=(12, 7))
+    fig, ax = plt.subplots(figsize=(14, 7.5))
+
     
-    # Titolo Globale
     fig.suptitle("Decadimento debito residuo", fontsize=25, fontweight='bold', y=0.88)
     fig.set_facecolor('none')
     ax.set_facecolor('none')
 
-    ax.plot(df_fr['Periodo'], df_fr['Debito Residuo (€)'], label="francese", color='#117733')    
-    ax.plot(df_it['Periodo'], df_it['Debito Residuo (€)'], label="italiano", color='#D55E00')    
-    ax.plot(df_bl['Periodo'], df_bl['Debito Residuo (€)'], label="bullet", color='#78288C')    
 
-    # Formattazione Assi
-    ax.set_xlabel("Asse temporale ", fontsize=16, labelpad=15)
-    ax.set_ylabel("Debito residuo [€]", fontsize=16, labelpad=15)
+    ax.plot(df_fr['Periodo'], df_fr['Debito Residuo (€)'], label="Francese", color='#ffb000')    
+    ax.plot(df_it['Periodo'], df_it['Debito Residuo (€)'], label="Italiano", color='#648fff')    
+    ax.plot(df_bl['Periodo'], df_bl['Debito Residuo (€)'], label="Bullet", color='#dc267f')    
+
+
+    ax.set_xlabel("Asse temporale ", fontsize=14, labelpad=14)
+    ax.set_ylabel("Debito residuo [€]", fontsize=14, labelpad=14)
     
     ax.set_xticks(df_fr['Periodo'])
     ax.set_xticklabels([])
 
     
-    ax.grid(axis='y', linestyle=':', color='gray', alpha=0.4)
+    ax.grid(axis='y', linestyle=':', color='gray', alpha=0.35)
 
     fig.legend(loc='lower center', 
                bbox_to_anchor=(0.5, 0.05), 
                ncol=2, 
-               fontsize=15, 
+               fontsize=16, 
                frameon=False)
 
     plt.tight_layout(rect=[0, 0.22, 1, 0.90])
@@ -270,16 +274,76 @@ def plot_confronto_decadimento(df_fr: pd.DataFrame, df_it: pd.DataFrame, df_bl: 
                 format="png"
             )
         
-    if mostra:
+    if show:
          plt.show()
             
     plt.close(fig)
 
-## =============================================== ##
-## =============================================== ##
+## +++++++++++++++++++++++++++++++++++++++++++++++ ##
+## +++++++++++++++++++++++++++++++++++++++++++++++ ##
 ##                      ALTRO                      ##
-## =============================================== ##
-## =============================================== ##
+## +++++++++++++++++++++++++++++++++++++++++++++++ ##
+## +++++++++++++++++++++++++++++++++++++++++++++++ ##
+
+def pulisci_schermo():
+    comando = 'cls' if os.name == 'nt' else 'clear'
+    subprocess.run(comando, shell=True, check=False)
+
+def cancella_ultima_riga():
+    print("\033[F\033[K", end="")
+
+
+def stampa_intestazione_iniziale(cap : int, tasso: float, rate : int, frequenza : str, tipo_piano : str):
+    print("=" * 60)
+    print()
+    print(" CALCOLATORE DEL PRESTITO PERSONALE ".center(60))
+    print()
+    print("-" * 60)
+    print(f"\n Finanziamento: {cap:,.2f} € | TAN: {tasso*100:.2f} %")
+    print(f" Rate: {rate} ({frequenza}) | Piano: {tipo_piano.upper()}")
+    print(" In costruzione: min e massimo dei piani")
+    print()
+    print("-" * 60)
+    print()
+    print("Assenza del Day Count e festività | Tasso fisso ")
+    print("Nessun preammortamento")
+    print()
+    print("=" * 60)
+    print()
+
+def stampa_intestazione_finale(cap : int, tasso: float, rate : int, frequenza : str, tipo_piano : str,
+                               csv: bool = False, png1: bool = False, png2: bool = False):
+    print("=" * 60)
+    print()
+    print(" CALCOLATORE DEL PRESTITO PERSONALE ".center(60))
+    print()
+    print("-" * 60)
+    print(f"\n Finanziamento: {cap:,.2f} € | TAN: {tasso*100:.2f} %")
+    print(f" Rate: {rate} ({frequenza}) | Piano: {tipo_piano.upper()}")
+    print(" In costruzione: min e massimo dei piani")
+    print()
+    print("-" * 60)
+    print()
+    print("Assenza del Day Count e festività | Tasso fisso ")
+    print("Nessun preammortamento")
+    print()
+    print("-" * 60)
+    print()
+    if csv == False:
+        print("Esportazione CSV: NO")
+    else:
+        print("Esportazione CSV: SI")
+    if png1 == False:
+        print("Esportazione PNG 1: NO")
+    else:
+        print("Esportazione PNG 1: SI")
+    if png2 == False:
+        print("Esportazione PNG 2: NO")
+    else:
+        print("Esportazione PNG 2: SI")
+    print()
+    print("=" * 60)
+
 
 def acquisisci_input_numerico(prompt: str, tipo_dato: type):
     while True:
@@ -296,7 +360,7 @@ def acquisisci_input_numerico(prompt: str, tipo_dato: type):
             print(f"Errore: Formato non valido. È richiesto un dato di tipo {tipo_dato.__name__}.\n")
 
 
-#####################################################
+#####################################################   
 #####################################################
 #####################################################
 ##                    MAIN                         ##
@@ -306,61 +370,54 @@ def acquisisci_input_numerico(prompt: str, tipo_dato: type):
 
 if __name__ == "__main__":
 
+    pulisci_schermo()
+    print("=" * 60)
+    print("INSERIMENTO DATI SIMULAZIONE".center(60))
+    print("=" * 60)
+    print()
     ## ------------------------------------------------##
     ##         INSERIMENTO DELLE VARIABILI             ##
     ## ----------------------------------------------- ##
-
-    cap = acquisisci_input_numerico("Inserisci valore finanziamento (in €): ", float)
-    tasso = acquisisci_input_numerico("Inserisci TAN in formato decimale (es. 0.05 per 5%): ", float)
-    rate = acquisisci_input_numerico("Inserisci il numero totale di rate: ", int)
-    
+    cap = acquisisci_input_numerico("Inserire valore finanziamento (presunto in €): ", float)
+    cancella_ultima_riga()
+    tasso = acquisisci_input_numerico("Inserire TAN in formato decimale (es. 0.05 per 5%): ", float)
+    cancella_ultima_riga()
+    rate = acquisisci_input_numerico("Inserire il numero totale delle rate: ", int)
+    cancella_ultima_riga()
     while True:
-        tipo_piano = input("Piano (francese, italiano, bullet): ").strip().lower()
+        tipo_piano = input("Quale piano vorresti simulare a schermo? (tra: francese, italiano, bullet): ").strip().lower()   
         if tipo_piano in ['francese', 'italiano', 'bullet']:
             break
-        print("Errore: Piano non riconosciuto. Inserire 'francese', 'italiano' o 'bullet'.\n")
-
+    cancella_ultima_riga()
     while True:
-        frequenza = input("Inserisci frequenza delle rate (tra mensile, trimestrale, semestrale e annuale): ").strip().lower()
+        frequenza = input("Inserire la frequenza delle rate (tra: mensile, trimestrale, semestrale e annuale): ").strip().lower()
         if frequenza in ['mensile', 'trimestrale', 'semestrale', 'annuale']:
             break
-        print("Errore: Frequenza non valida. Inserire 'mensile', 'trimestrale', 'semestrale' o 'annuale'.\n")  
+    cancella_ultima_riga()
+
+    pausa = input("PREMERE INVIO PER PROCEDERE...")
+    cancella_ultima_riga()
 
     ## ------------------------------------------------ ##
     ##             ELABORAZIONE DEI DATI                ##
     ## ------------------------------------------------ ##
 
-    print("\n=========================================")
-    print("=========================================")
-    print("    CALCOLATORE DEL PRESTITO PERSONALE   ")
-    print("==========================================\n")
-    print("Dati inseriti dell'user:")
-    print(f"Finanziamento da {round(cap,0)} €")
-    print(f"Tasso interesse annuale (TAN) del contratto: {round(tasso*100,2)} %")
-    print(f"Numero di rate: {rate}")
-    print(f"Frequenza delle rate: {frequenza}\n")
-    print(f"Piano da scaricare in formato csv: {tipo_piano}\n")
-    pausa = input("Premi Invio per avviare l'elaborazione dei dati...")
-    print("----------------------------")
-    print("Elaborazione in corso...")
-    print("----------------------------\n")
-    
-    interesse_periodo = tasso
+    interesse = tasso
     if frequenza == "mensile":
-        interesse_periodo = tasso / 12
+        interesse = tasso / 12
     elif frequenza == "trimestrale":
-        interesse_periodo = tasso / 4
+        interesse = tasso / 4
     elif frequenza == "semestrale":
-        interesse_periodo = tasso / 2
+        interesse = tasso / 2
     elif frequenza == "annuale":
-        interesse_periodo = tasso
+        interesse = tasso
     else:
         print("Frequenza non valida. Impostata a 'annuale' per default.")
         
     piani = {
-        "francese": ammortamento_francese(cap, interesse_periodo, rate),
-        "italiano": ammortamento_italiano(cap, interesse_periodo, rate),
-        "bullet": ammortamento_bullet(cap, interesse_periodo, rate)
+        "francese": ammortamento_francese(cap, interesse, rate),
+        "italiano": ammortamento_italiano(cap, interesse, rate),
+        "bullet": ammortamento_bullet(cap, interesse, rate)
     }
     
     df = piani[tipo_piano]
@@ -375,32 +432,29 @@ if __name__ == "__main__":
 
     pd.options.display.float_format = '{:,.2f}'.format
 
-    print("\n----------------------------\n")
-    print("Impatto componenti sul totale rimborsato:")
-    print(f"- Quota interessi: {interesse_totale/pagato_totale*100:.2f} %")
-    print(f"- Quota capitale:  {capitale_totale/pagato_totale*100:.2f} %\n")
-    print("=========================================\n")
+    pulisci_schermo()
+    stampa_intestazione_iniziale(cap, tasso, rate, frequenza, tipo_piano)
+
     print(df.to_string(index=False))
-    print("\n----------------------------\n")
-    print("Impatto componenti sul totale rimborsato:")
+
+    print("\nImpatto componenti sul totale rimborsato:")
     print(f"- Quota interessi: {interesse_totale/pagato_totale*100:.2f} %")
-    print(f"- Quota capitale:  {capitale_totale/pagato_totale*100:.2f} %\n")
-    print("=========================================\n")
-    pausa = input("Premi Invio per continuare...") 
+    print(f"- Quota capitale:  {capitale_totale/pagato_totale*100:.2f} %")
+    print("\n" + "-" * 60)
+    input("PREMERE INVIO PER PROCEDERE CON LE SCELTE DI ESPORTAZIONE...")
+    pulisci_schermo()
+
+    stampa_intestazione_iniziale(cap, tasso, rate, frequenza, tipo_piano)
 
     ## ------------------------------------------------ ##
-    ##               ESPORTAZIONE ON/OFF                ##
+    ##            ESPORTAZIONE CSV (facoltativo)        ##
     ## ------------------------------------------------ ##
 
-    ## ------------------------------------------------ ##
-    ##                      CSV                         ##
-    ## ------------------------------------------------ ##
-
-    salva_CSV = input(f"\nDesideri scaricare il piano selezionato ({tipo_piano}) in formato .csv? (s/n): ").strip().lower()
-
+    salva_CSV = input(f"Scaricare piano selezionato ({tipo_piano}) in formato .csv? (s/n): ").strip().lower()
+    cancella_ultima_riga()
     if salva_CSV in ['s', 'si', 'y', 'yes']:
-        nome_file = input("Inserisci il nome del file (es. X.csv) o premi Invio per default: ").strip()
-        
+        nome_file = input("Nome file (es. piano.csv) o Invio per default:  ").strip()
+        salva_CSV = True
         if not nome_file:
             nome_file = "piano_ammortamento.csv"
         elif not (nome_file.endswith(".csv")):
@@ -412,27 +466,37 @@ if __name__ == "__main__":
                 os.makedirs(cartella_destinazione)
             
             df.to_csv(nome_file, index=False, sep=';', decimal=',')
-            
             print(f"[SUCCESSO] Esportazione dei dati csv avvenuta '{nome_file}'.")
-        except Exception as e:
+        except OSError as e:
             print(f"[ERRORE] Impossibile salvare i dati del DataFrame: {e}")
-
-    pausa = input("Premi Invio per continuare...")
+    else:
+        salva_CSV = False
 
     ## ------------------------------------------------ ##
     ##                    PNG                           ##
     ## ------------------------------------------------ ##
 
     # ---- GRAFICO 1: A TORTA ----
-    print("\n--- GRAFICO 1: Ripartizione Costi (Torta) ---")
-    mostra_PNG_1 = input("Vuoi VISUALIZZARE il grafico a schermo? (s/n): ").strip().lower() in ['s', 'si', 'y', 'yes']
-    salva_PNG_1 = input("Vuoi SALVARE il grafico sul PC? (s/n): ").strip().lower() in ['s', 'si', 'y', 'yes']
-
+    print("-----------------------------------------")
+    print("- GRAFICO 1: Ripartizione Costi (Torta) -")
+    print("-----------------------------------------")
+    print()
+    mostra_PNG_1 = input("Visualizzare a schermo? (s/n): ").strip().lower() in ['s', 'si', 'y', 'yes']
+    cancella_ultima_riga()
+    salva_PNG_1 = input("Salvare sul PC? (s/n): ").strip().lower() in ['s', 'si', 'y', 'yes']
+    cancella_ultima_riga()
+    if mostra_PNG_1:
+        mostra_PNG_1 = True
+    else:
+        mostra_PNG_1 = False
+    
     if mostra_PNG_1 or salva_PNG_1:
         percorso_completo_1 = None
         
         if salva_PNG_1:
             nome_file = input("Inserisci il nome del file (es. torta.png) o premi Invio per default: ").strip()
+            cancella_ultima_riga()
+            salva_PNG_1 = True
             if not nome_file:
                 nome_file = "grafico1_torta.png"
             elif not nome_file.endswith((".png", ".jpg", ".pdf")):
@@ -440,32 +504,47 @@ if __name__ == "__main__":
                 
 
             percorso_completo_1 = os.path.join(os.getcwd(), nome_file)
-            
+        else:
+            salva_PNG_1 = False
+           
         try:
             pie_plot_confronto(
                 piani["francese"], piani["italiano"], piani["bullet"], 
                 cap, tasso, rate, frequenza, 
                 percorso_salvataggio=percorso_completo_1, 
-                mostra=mostra_PNG_1
+                show=mostra_PNG_1
             )
             if salva_PNG_1:
                 print(f"[SUCCESSO] Grafico 1 salvato in: {percorso_completo_1}")
-        except Exception as e:
+        except OSError as e:
             print(f"[ERRORE] Impossibile generare il grafico 1: {e}")
 
     pausa = input("\nPremi Invio per passare al prossimo grafico...")
 
+    pulisci_schermo()
+    stampa_intestazione_iniziale(cap, tasso, rate, frequenza, tipo_piano)
 
     # ---- GRAFICO 2: DECADIMENTO DEBITO ----
-    print("\n--- GRAFICO 2: Decadimento Debito Residuo ---")
-    mostra_PNG_2 = input("Vuoi VISUALIZZARE il grafico a schermo? (s/n): ").strip().lower() in ['s', 'si', 'y', 'yes']
-    salva_PNG_2 = input("Vuoi SALVARE il grafico sul PC? (s/n): ").strip().lower() in ['s', 'si', 'y', 'yes']
-
+    print("-----------------------------------------")
+    print("- GRAFICO 2: Decadimento Debito Residuo -")
+    print("-----------------------------------------")
+    print()
+    mostra_PNG_2 = input("Visualizzare a schermo? (s/n): ").strip().lower() in ['s', 'si', 'y', 'yes']
+    cancella_ultima_riga()
+    salva_PNG_2 = input("Salvare sul PC? (s/n): ").strip().lower() in ['s', 'si', 'y', 'yes']
+    cancella_ultima_riga()
+    if mostra_PNG_2:
+        mostra_PNG_2 = True
+    else:
+        mostra_PNG_2 = False
+    
     if mostra_PNG_2 or salva_PNG_2:
         percorso_completo_2 = None
         
         if salva_PNG_2:
+            salva_PNG_2 = True
             nome_file = input("Inserisci il nome del file (es. decadimento.png) o premi Invio per default: ").strip()
+            cancella_ultima_riga()
             if not nome_file:
                 nome_file = "grafico2_decadimento.png"
             elif not nome_file.endswith((".png", ".jpg", ".pdf")):
@@ -473,14 +552,21 @@ if __name__ == "__main__":
                 
 
             percorso_completo_2 = os.path.join(os.getcwd(), nome_file)
-            
+        else:
+            salva_PNG_2 = False   
         try:
             plot_confronto_decadimento(
                 piani["francese"], piani["italiano"], piani["bullet"], 
                 percorso_salvataggio=percorso_completo_2, 
-                mostra=mostra_PNG_2
+                show=mostra_PNG_2
             )
             if salva_PNG_2:
                 print(f"[SUCCESSO] Grafico 2 salvato in: {percorso_completo_2}")
-        except Exception as e:
+        except OSError as e:
             print(f"[ERRORE] Impossibile generare il grafico 2: {e}")
+
+    pulisci_schermo()
+    print("Elaborazione completata.\n")     
+    stampa_intestazione_finale(cap, tasso, rate, frequenza, tipo_piano,
+                                 csv=salva_CSV, png1=salva_PNG_1, png2=salva_PNG_2)
+    
