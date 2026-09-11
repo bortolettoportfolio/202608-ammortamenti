@@ -9,7 +9,7 @@ Questa repository ospita un set di algoritmi in Python dedicati alla simulazione
 |:---|:---:|
 |[main.py](py/main.py)|🟡|
 |[grafici generati di esempio](png)|🟡|
-|[teoria senza troppi giri di parole](piani_ammortamento_classici.pdf)|🟡| 
+|[matematica finanziaria di base](piani_ammortamento_classici.pdf)|🟡| 
 
 > [!WARNING]
 > Grafici sono ottimizzati per visualizzazione su sfondo chiaro :)
@@ -17,6 +17,7 @@ Questa repository ospita un set di algoritmi in Python dedicati alla simulazione
 > [!NOTE]
 > Consiglio la lettura del paragrafo "🤞 Requisiti e Utilizzo"
 
+---
 ## 🫠 In sintesi
 Costruire il piano di ammortamento di un prestito significa redigere il prospetto temporale attraverso il quale il debitore rimborsa il capitale e liquida gli interessi al creditore.
 
